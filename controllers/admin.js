@@ -53,20 +53,24 @@ exports.postAddProduct = (req, res, next) => {
             res.redirect('/admin/products');
         })
         .catch(err => {
-            return res.status(500).render('admin/edit-product', {
-                pageTitle: 'Add Product',
-                path: '/admin/add-product',
-                editing: false,
-                hasError: true,
-                product: {
-                    title: title,
-                    imageUrl: imageUrl,
-                    price: price,
-                    description: description
-                },
-                errorMessage: 'Database operation failed, please try again.',
-                validationErrors: []
-            });
+            // This would be appropriate err handling for temp db issues 
+            // return res.status(500).render('admin/edit-product', {
+            //     pageTitle: 'Add Product',
+            //     path: '/admin/add-product',
+            //     editing: false,
+            //     hasError: true,
+            //     product: {
+            //         title: title,
+            //         imageUrl: imageUrl,
+            //         price: price,
+            //         description: description
+            //     },
+            //     errorMessage: 'Database operation failed, please try again.',
+            //     validationErrors: []
+            // });
+
+            // This is appropriate err handling for bigger tech server side issues = 500 !!! 
+            res.redirect('/500');
         });
 };
 
