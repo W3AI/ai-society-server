@@ -70,7 +70,10 @@ exports.postAddProduct = (req, res, next) => {
             // });
 
             // This is appropriate err handling for bigger tech server side issues = 500 !!! 
-            res.redirect('/500');
+            // res.redirect('/500');
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);     // passing the error to the Express Err Handling Middleware
         });
 };
 
@@ -95,7 +98,11 @@ exports.getEditProduct = (req, res, next) => {
                 validationErrors: []
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);     // passing the error to the Express Err Handling Middleware
+        });
 };
 
 exports.postEditProduct = (req, res, next) => {

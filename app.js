@@ -72,6 +72,12 @@ app.get('/500', errorController.get500);
 
 app.use(errorController.get404);
 
+// Using Express Error handling Middleware - with 4 args
+app.use((error, req, res, next) => {
+    // res.status(error.httpStatusCode).render(...);    // using Err patterns to forward/trigger new pathways of processing that might be directed to DevOps / recompilation of the server itself
+    res.redirect('/500');
+});
+
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true })
   .then(result => {
