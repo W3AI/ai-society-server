@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
+const PDFDocument = require('pdfkit');
+
 const Product = require("../models/product");
 const Order = require("../models/order");
 
@@ -162,6 +164,21 @@ exports.getInvoice = (req, res, next) => {
       }
       const invoiceName = "invoice-" + orderId + ".pdf";
       const invoicePath = path.join("data", "invoices", invoiceName);
+
+      const pdfDoc = new PDFDocument();
+      
+      res.setHeader(
+        "Content-Disposition",
+        'inline; filename="' + invoiceName + '"'
+      );
+
+      pdfDoc.pipe(fs.createWriteStream(invoicePath));
+      pdfDoc.pipe(res);
+
+      pdfDoc.text('Servus World!');
+
+      pdfDoc.end();
+
       // OK for smaller files, and low traffice but not good practice as files are read into memory (limited) before transmitted
       //   fs.readFile(invoicePath, (err, data) => {
       //     if (err) {
@@ -176,12 +193,9 @@ exports.getInvoice = (req, res, next) => {
       //   });
 
       // Streaming the file
-      const file = fs.createReadStream(invoicePath);
-      res.setHeader(
-        "Content-Disposition",
-        'inline; filename="' + invoiceName + '"'
-      );
-      file.pipe(res);
+    //   const file = fs.createReadStream(invoicePath);
+
+    //   file.pipe(res);
     })
     .catch(err => next(err));
 };
