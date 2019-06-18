@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const PDFDocument = require("pdfkit");
-const stripe = require("stripe")("sk_test_olb9DcHJWlAAM2cIqNfG3MZL00BUAVoVW7");
+const stripe = require("stripe")("sk_test_olb9DcHJWlAAM2cIqNfG3MZL00BUAVoVW7"); // To remove/replace for PROD
 
 const Product = require("../models/product");
 const Order = require("../models/order");
