@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const PDFDocument = require("pdfkit");
+const stripe = require('stripe')('sk_test_olb9DcHJWlAAM2cIqNfG3MZL00BUAVoVW7');
 
 const Product = require("../models/product");
 const Order = require("../models/order");
@@ -164,7 +165,6 @@ exports.getCheckout = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-    const stripe = require('stripe')('sk_test_olb9DcHJWlAAM2cIqNfG3MZL00BUAVoVW7');
 
     // Token is created using Checkout or Elements!
     // Get the payment token ID submitted by the form:
